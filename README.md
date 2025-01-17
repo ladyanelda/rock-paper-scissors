@@ -3,9 +3,9 @@ A simple and fun implementation of the classic Rock-Paper-Scissors game, played 
 
 Rules of the Game 📝
 The winner is determined as follows:
-    i. Rock beats Scissors 🪨✂️
-    ii. Scissors beats Paper ✂️📄
-    iii. Paper beats Rock 📄🪨
+1. Rock beats Scissors 🪨✂️
+2. Scissors beats Paper ✂️📄
+3. Paper beats Rock 📄🪨
 If both you and the computer make the same choice, it’s a draw! 🤝
 
 How to Play 🚀
