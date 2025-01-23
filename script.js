@@ -1,58 +1,66 @@
-// the computerScore function
-/*
-use the conditions to play the game 
-if the computerChoice is randomly selected to be 1 then it has to return Rock
-*/
+// name variables
+// Variables to track scores
+let humanScore = 0;
+let computerScore = 0;
 
-// the computerScore function
+// Get DOM elements
+const resultDiv = document.getElementById('result');
+const scoreDiv = document.getElementById('score');
+
+// Function to get the computer's choice
 function getComputerChoice() {
-    const computerChoice = Math.floor(Math.random() * 3);
-    if (computerChoice === 0) {
-        return 'Rock';
-    } else if (computerChoice === 1) {
-        return 'Paper';
-    } else {
-        return 'Scissors';
-    }
+    const choices = ['Rock', 'Paper', 'Scissors'];
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
 }
 
-// the humanScore
-function getHumanChoice() {
-    let answer = prompt('Rock, Paper, or Scissors?');
-    answer = answer.toLowerCase();
-
-    if (answer === 'rock') {
-        return 'Rock';
-    } else if (answer === 'paper') {
-        return 'Paper';
-    } else if (answer === 'scissors') {
-        return 'Scissors';
-    } else {
-        return 'Invalid Choice'; // Handling invalid input
-    }
+// Function to update the score display
+function updateScore() {
+    scoreDiv.textContent = `Score: Human ${humanScore} - Computer ${computerScore}`;
 }
 
-function playRound(humanChoice, computerChoice) {
-    if (humanChoice === 'Invalid Choice') {
-        console.log("Please enter a valid choice: Rock, Paper, or Scissors.");
-        return; // Exit if invalid choice
-    }
+// Function to play a round
+function playRound(humanChoice) {
+    const computerChoice = getComputerChoice();
 
     if (humanChoice === computerChoice) {
-        console.log('A draw!');
+        resultDiv.textContent = 'It\'s a draw!';
     } else if (
         (humanChoice === 'Rock' && computerChoice === 'Scissors') ||
         (humanChoice === 'Scissors' && computerChoice === 'Paper') ||
         (humanChoice === 'Paper' && computerChoice === 'Rock')
     ) {
-        console.log('You win! ' + humanChoice + ' beats ' + computerChoice);
+        humanScore++;
+        resultDiv.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
     } else {
-        console.log('You lose! ' + computerChoice + ' beats ' + humanChoice);
+        computerScore++;
+        resultDiv.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
+    }
+
+    updateScore();
+
+    // Check for a winner
+    if (humanScore === 5) {
+        alert('Congratulations! You won the game!');
+        resetGame();
+    } else if (computerScore === 5) {
+        alert('Game Over! The computer won.');
+        resetGame();
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-playRound(humanSelection, computerSelection);
+// Function to reset the game
+function resetGame() {
+    humanScore = 0;
+    computerScore = 0;
+    updateScore();
+    resultDiv.textContent = 'Game reset. Play again!';
+}
 
-  
+// Add event listeners for buttons
+document.getElementById('rock').addEventListener('click', () => playRound('Rock'));
+document.getElementById('paper').addEventListener('click', () => playRound('Paper'));
+document.getElementById('scissors').addEventListener('click', () => playRound('Scissors'));
+
+// Initialize the score display
+updateScore();
